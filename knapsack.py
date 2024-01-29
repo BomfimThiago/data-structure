@@ -16,9 +16,11 @@ and the cumulative value of the items in the knapsack is maximized.
 - Equal Sum Subarrays
 - Count Square Submatrices
 
-The 0/1 Knapsack is a special case of the Knapsack problem where item selection has some constraints. In general, the following restrictions are applied:
+The 0/1 Knapsack is a special case of the Knapsack problem where item selection has some constraints. 
+In general, the following restrictions are applied:
 
-A maximum of one item can be selected of each kind, that is, the number of items of each kind in the knapsack is either zero or one.
+A maximum of one item can be selected of each kind, that is, the number of items of each kind in the knapsack 
+is either zero or one.
 
 We can't take a fraction of an item, that is, we either have to take the complete item or leave it.
 """

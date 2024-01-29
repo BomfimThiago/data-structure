@@ -1,14 +1,25 @@
 """
-Hash maps are indexed data structures. A hash map makes use of a hash function to compute an index with a key into an array of buckets or slots. Its value is mapped to the bucket with the corresponding index. The key is unique and immutable. Think of a hash map as a cabinet having drawers with labels for the things stored in them. For example, storing user information- consider email as the key, and we can map values corresponding to that user such as the first name, last name etc to a bucket.  
+Hash maps are indexed data structures. A hash map makes use of a hash function to compute an index 
+with a key into an array of buckets or slots. Its value is mapped to the bucket with the corresponding index. 
+The key is unique and immutable. Think of a hash map as a cabinet having drawers with labels for the things stored in them. 
+For example, storing user information- consider email as the key, and we can map values corresponding 
+to that user such as the first name, last name etc to a bucket.  
 
-Hash function is the core of implementing a hash map. It takes in the key and translates it to the index of a bucket in the bucket list. Ideal hashing should produce a different index for each key. However, collisions can occur. When hashing gives an existing index, we can simply use a bucket for multiple values by appending a list or by rehashing.
+Hash function is the core of implementing a hash map. It takes in the key and translates it to the index 
+of a bucket in the bucket list. Ideal hashing should produce a different index for each key. 
+However, collisions can occur. When hashing gives an existing index, we can simply use a 
+bucket for multiple values by appending a list or by rehashing.
 
 In Python, dictionaries are examples of hash maps. 
 The hash map design will include the following functions:
 
 
-set_val(key, value): Inserts a key-value pair into the hash map. If the value already exists in the hash map, update the value.
-get_val(key): Returns the value to which the specified key is mapped, or “No record found” if this map contains no mapping for the key.
+set_val(key, value): Inserts a key-value pair into the hash map. If the value already exists in the hash map, 
+update the value.
+
+get_val(key): Returns the value to which the specified key is mapped, or “No record found” 
+if this map contains no mapping for the key.
+
 delete_val(key): Removes the mapping for the specific key if the hash map contains the mapping for the key.
 """
 
