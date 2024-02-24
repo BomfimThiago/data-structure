@@ -37,3 +37,7 @@ Bubble sort algorithm: O(n^2)
 sort() and sorted() of python is O(n log n) as well and they use the TimSort algorithm
 """
 
+# in summary dict, set, tuples, and strings are O(1) for insertion, retrieval, and removal
+# lists are O(1) for insertion and removal at the end, but O(n) for insertion and removal at the beginning or in the middle
+# sorting is O(n log n) for efficient algorithms and O(n^2) for bubble sort
+# concatenation is O(n) for strings
