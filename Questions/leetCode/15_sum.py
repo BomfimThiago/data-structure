@@ -29,19 +29,42 @@ Explanation: The only possible triplet sums up to 0.
 from typing import List
 
 
-def threeSum(self, nums: List[int]) -> List[List[int]]:
-    size = len(nums) 
-    if size < 3:
-        return []
-    
-    cache = {}
-    
-    for i in range(size):
-        for j in range(i + 1, size):
-            for k in range(j + 1, size):
-                if (i, j, k) in cache:
-                    continue
+def threeSum(nums: List[int]) -> List[List[int]]:
+    res = []
+        # first we order the array
+    nums.sort()
 
-                cache[(i, j, k)] = nums[i] + nums[j] + nums[k]
+    # for each position we need to see if the other 2 positions sum = 0
+    # if the sum is too high, we decrise the right pointer
+    # if the sum is too low, we increase the left pointer
+    # if the sum is 0, we increase l and decrease r and add the set in our results
 
-    return [key for key in cache if cache[key] == 0]
+
+    # [-1,0,1,2,-1,-4]
+    # [-4, -1, -1, 0, 1, 2]
+    for i in range(len(nums)):
+        if i + 1 >= len(nums):
+            break # it means that I'm in the last number of my array
+        
+        if i - 1 >= 0: # this position 
+            if nums[i] == nums[i - 1]:
+                continue
+
+        l = i + 1
+        r = len(nums) - 1
+
+        while l < r:
+            if nums[i] + nums[l] + nums[r] == 0:
+                res.append([nums[i], nums[l], nums[r]])
+                l += 1
+                while nums[l] == nums[l - 1] and l < r:
+                    l += 1
+            elif nums[i] + nums[l] + nums[r] > 0:
+                r -= 1
+            else:
+                l += 1
+
+    return res
+
+if __name__ == "__main__":
+    print(threeSum([-1,0,1,2,-1,-4]))
