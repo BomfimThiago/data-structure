@@ -20,21 +20,49 @@ Explanation: In this case, no transactions are done and the max profit = 0.
 """
 from typing import List
 
-# [7,1,5,3,6,4]
+# this works but it explode the memory
 def maxProfit(prices: List[int]) -> int:
-    l = 0 # left pointer
-    r = 1 # right pointer
     maxP = 0
+    for i in range(1, len(prices)):
+        # min do left array seria o dia da venda
+        buy = min(prices[:i])
+        sell = prices[i]
+
+        maxP = max(maxP, sell- buy)
+
+    return maxP
+        
+# Another way is to track the min of the left array prices[:i] in each loop
+def maxProfit2(prices: List[int]) -> int:
+    maxP = 0
+    minL = prices[0]
+    for i in range(1, len(prices)):
+        buy = minL
+        sell = prices[i]
+
+        maxP = max(maxP, sell - buy)
+        minL = min(minL, prices[i])
+
+    return maxP
+
+# Two pointers solutions
+def maxProfit3(prices: List[int]) -> int:
+    l, r = 0, 1 #left=buy, right=sell
+    maxP = 0
+
     while r < len(prices):
         if prices[l] < prices[r]:
             p = prices[r] - prices[l]
             maxP = max(maxP, p)
         else:
             l = r
-        r + 1
+        r += 1
 
+    return maxP
 
 
 
 if __name__ == "__main__":
-    print(maxProfit([1, 2]))
+    print(maxProfit([7,1,5,3,6,4]))
+    print(maxProfit2([7,1,5,3,6,4]))
+    print(maxProfit3([7,1,5,3,6,4]))

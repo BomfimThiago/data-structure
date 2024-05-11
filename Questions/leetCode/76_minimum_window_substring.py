@@ -24,37 +24,73 @@ Output: ""
 Explanation: Both 'a's from t must be included in the window.
 Since the largest window of s only has one 'a', return empty string.
 """
-def minWindow(s: str, t: str) -> str:
-    if t == "": return ""
+# def minWindow(s: str, t: str) -> str:
+#     if t == "": return ""
     
-    # I need to understand how many letters and what letters are in t
-    # this way I map all the char and how many of them I have in t
-    dict_t, window = {}, {}
-    for c in t:
-        dict_t[c] = dict_t.get(c, 0) + 1
+#     # I need to understand how many letters and what letters are in t
+#     # this way I map all the char and how many of them I have in t
+#     dict_t, window = {}, {}
+#     for c in t:
+#         dict_t[c] = dict_t.get(c, 0) + 1
 
-    have, need = 0, len(dict_t)
-    res, resL = [-1, -1], float("inf")
-    l = 0 # pointer to the first c in the window
+#     have, need = 0, len(dict_t)
+#     res, resL = [-1, -1], float("inf")
+#     l = 0 # pointer to the first c in the window
+#     for r in range(len(s)):
+#         c = s[r]
+#         window[c] = window.get(c, 0) + 1
+
+#         if c in dict_t and dict_t[c] == window[c]:
+#             have += 1
+
+#         while have == need:
+#             # update the res
+#             if (r - l + 1) < resL:
+#                 res = [l, r]
+#                 resL = (r - l + 1)
+
+#             # pop from the left of the window
+#             window[s[l]] -= 1
+
+#             if s[l] in dict_t and window[s[l]] < dict_t[s[l]]:
+#                 have -= 1
+
+#             l += 1
+#     l, r = res
+#     return s[l:r+1] if resL != float("inf") else ""
+
+def minWindow2(s: str, t: str) -> str:
+    if t == "": return ""
+    hashT, hashWindow = {}, {}
+    for ch in t:
+        hashT[ch] = 1 + hashT.get(ch, 0)
+
+    have, need = 0, len(hashT)
+    res, resL = [-1, -1], float("inf")  # I need to main track of l and r because in the end I want the min l, r possible to a valid window
+
+    l = 0
+
     for r in range(len(s)):
-        c = s[r]
-        window[c] = window.get(c, 0) + 1
+        ch = s[r]
+        hashWindow[ch] = 1 + hashWindow.get(ch, 0)
 
-        if c in dict_t and dict_t[c] == window[c]:
+        if ch in hashT and hashT[ch] == hashWindow[ch]:
             have += 1
 
-        while have == need:
-            # update the res
+        while need == have:
             if (r - l + 1) < resL:
-                res = [l, r]
+                res = [l, r] # min l, r possible to the window
                 resL = (r - l + 1)
 
-            # pop from the left of the window
-            window[s[l]] -= 1
+            hashWindow[s[l]] -= 1
 
-            if s[l] in dict_t and window[s[l]] < dict_t[s[l]]:
+            if s[l] in hashT and hashWindow[s[l]] < hashT[s[l]]:
                 have -= 1
 
-            l += 1
-    l, r = res
-    return s[l:r+1] if resL != float("inf") else ""
+            l += 1 
+
+    l, r  = res
+    return s[l:r+1] if resL != float("inf") else "" 
+
+if __name__ == "__main__":
+    print(minWindow2(s = "ADOBECODEBANC", t = "ABC"))

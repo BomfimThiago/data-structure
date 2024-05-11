@@ -23,15 +23,19 @@ from typing import List
 
 def maxArea(height: List[int]):
     l = 0
-    r = len(height) - 1
-    maxA = (r - l) * min(height[l], height[r])
+    r = len(height) - 1 
+    maxA = 0
 
-    while l != r:
-        maxA = max(maxA, (r - l) * min(height[l], height[r])) 
-        
-        if l <= r:
+    while l < r:
+        A = (r - l) * min(height[l], height[r])
+        maxA = max(maxA, A)
+
+        if height[l] <= height[r]:
             l += 1
         else:
             r -= 1
 
-    return maxA
+    return maxA     
+
+if __name__ == "__main__":
+    print(maxArea([1,8,6,2,5,4,8,3,7]))
