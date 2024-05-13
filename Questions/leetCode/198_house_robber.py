@@ -19,24 +19,15 @@ Total amount you can rob = 2 + 9 + 1 = 12.
 """
 from typing import List
 
-# This work but is inefficient for a lot of numbers
 def rob(nums: List[int]) -> int:
-    val = 0
-    if len(nums) == 1:
-        return nums[0]
-    elif len(nums) == 2:
-        return max(nums[0], nums[1])
-    else:
-        val = max(
-            nums[0] + rob(nums[2:]),
-            rob(nums[1:])
-        )
+    a = 0 
+    b = 0
+    for num in nums:
+        tmp = max(a + num, b)
+        a = b
+        b = tmp
 
-    return val
-
-
+    return b
+        
 if __name__ == "__main__":
     print(rob([2, 1, 1, 2]))
-
-def rob2(nums: List[int]) -> int:
-    pass
