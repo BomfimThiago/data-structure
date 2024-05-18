@@ -25,23 +25,44 @@ from typing import List
 import math
 
 
-def minEatingSpeed(piles: List[int], h: int) -> int:
-    maxN = max(piles)
-    l = 1 # k pode ser no minimo 1
-    r = maxN # k pode ser no maximo maxN
-    minK = r
+# def minEatingSpeed(piles: List[int], h: int) -> int:
+#     maxN = max(piles)
+#     l = 1 # k pode ser no minimo 1
+#     r = maxN # k pode ser no maximo maxN
+#     minK = r
+#     while l <= r:
+#         k = (l + r) // 2
+
+#         hours = sum([math.ceil(num/k) for num in piles])
+
+#         if hours > h:
+#             l = k + 1
+#         else:
+#             r = k - 1
+#             minK = min(minK, k)
+
+#     return minK
+def minEatingSpeed2(piles: List[int], h: int) -> int:
+    l = 1 # 1 banana per hour
+    r = max(piles) # max bananas in 1 hour
+
+    minQtd = 0
+
+    def canEat(qtd):
+        hour = 0
+        for pile in piles:
+            hour += (pile + qtd - 1) // qtd  # Ceil division to account for partial hours
+        return hour <= h
+
     while l <= r:
-        k = (l + r) // 2
+        qtd = (l + r) // 2
 
-        hours = sum([math.ceil(num/k) for num in piles])
-
-        if hours > h:
-            l = k + 1
+        if canEat(qtd):
+            minQtd = qtd
+            r = qtd - 1
         else:
-            r = k - 1
-            minK = min(minK, k)
+            l = qtd + 1
 
-    return minK
-
+    return minQtd
 if __name__ == "__main__":
-    print(minEatingSpeed([3,6,7,11], 8))
+    print(minEatingSpeed2([3,6,7,11], 8))

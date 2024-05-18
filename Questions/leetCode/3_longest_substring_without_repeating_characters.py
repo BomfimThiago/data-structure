@@ -24,18 +24,22 @@ Explanation: The answer is "wke", with the length of 3.
 Notice that the answer must be a substring, "pwke" is a subsequence and not a substring.
 
 """
-def lengthOfLongestSubstring(s: str):
-    chatSet = set()
-    left = 0
+def lengthOfLongestSubstring2(s: str):
+    window = set()
+    l = 0 # left pointer
     res = 0
-    for right in range(len(s)):
-        while s[right] in chatSet:
-            chatSet.remove(s[left])
-            left += 1
-        chatSet.add(s[right])
-        res = max(res, right - left + 1 )
+    for r in range(len(s)):
+        # abcb
+        while s[r] in window:
+            window.remove(s[l])
+            l += 1
+        else:
+            window.add(s[r])
+        
+        r += 1
+        res = max(res, r - l)
 
     return res
 
-
-
+if __name__ == "__main__":
+    print(lengthOfLongestSubstring2(s = "pwwkew"))

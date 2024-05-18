@@ -54,3 +54,33 @@ def mergeTwoLists(list1: Optional[ListNode], list2: Optional[ListNode]) -> Optio
         newNode.next = n2
 
     return dummy.next
+
+def mergeTwoLists(list1: Optional[ListNode], list2: Optional[ListNode]) -> Optional[ListNode]:
+    head1, head2 = list1, list2
+
+    new_node = ListNode()
+
+    curr = new_node
+    while head1 and head2:
+        if head1.val <= head2.val:
+            curr.next = head1
+            head1 = head1.next
+            curr = curr.next
+        else:
+            curr.next = head2
+            head2 = head2.next
+            curr = curr.next
+
+    if head1:
+        curr.next = head1
+
+    if head2:
+        curr.next = head2
+
+    return new_node.next # next because first element o new_node is null
+
+#  list1 = [1,2,4], list2 = [1,3,4]
+# [1,1,2,3,4,4]
+
+# 1 
+# new_node -> None -> 1

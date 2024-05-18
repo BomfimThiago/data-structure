@@ -41,3 +41,20 @@ def reverseList(self, head: Optional[ListNode]) -> Optional[ListNode]:
         curr = next_curr
 
     return newNode
+
+
+class ListNode:
+    def __init__(self, val=0, next=None):
+        self.val = val
+        self.next = next
+
+def reverseList(head: Optional[ListNode]) -> Optional[ListNode]:
+    curr = head
+    new_node = None
+    tmp_node = None
+    while curr:
+        tmp_node = curr.next
+        curr.next = new_node
+        new_node = curr
+        curr = tmp_node
+    return new_node

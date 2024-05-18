@@ -52,8 +52,36 @@ def isValid(s: str) -> bool:
 
     return True if not stack else False
     
-  
+def isValid2(s: str) -> bool:
+    brackets = {
+        '(': ')',
+        '{': '}',
+        '[': ']'
+    }
+
+    stack = []
+
+    for brack in s:
+        # if its a open bracket
+        if brack in brackets:
+            stack.append(brack)
+            continue
+
+        if not stack:
+            return False
+
+        # if its a close bracket
+        openB = stack.pop()
+        if not brack == brackets[openB]:
+            return False
+    
+    if stack:
+        return False
+
+    return True
+
+
 
 if __name__ == "__main__":
-    print(isValid("{[]}"))
+    print(isValid2("(])"))
 

@@ -34,16 +34,13 @@ def in_order(root):
         in_order(root.right)
 
 
-def  invertTree(root):
+def invertTree(root):
     if not root:
         return None
     
-    tmp = root.left
-    root.left = root.right
-    root.right = tmp
-
-    invertTree(root.left)
+    root.left, root.right = root.right, root.left
     invertTree(root.right)
+    invertTree(root.left)
 
     return root
 

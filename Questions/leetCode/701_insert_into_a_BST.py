@@ -25,19 +25,21 @@ class TreeNode(object):
         self.val = val
         self.left = left
         self.right = right
+
 def insertIntoBST(root, val):
+    # BST, small values in the left, greater values in the right
+    # return the root node after the insertion
+    # is guaranted that the new_node doesnt exist in the tree
     if not root:
         return TreeNode(val)
-    
-    if val > root.val:
-        root.right = insertIntoBST(root.right, val)
-    elif val < root.val:
+    if val < root.val:
         root.left = insertIntoBST(root.left, val)
-    else:
-        return root
-    
-    return root
-    
+    elif val > root.val:
+        root.right = insertIntoBST(root.right, val)
+
+    return
+
+
 def in_order_visit_tree(root):
     if root:
         in_order_visit_tree(root.left)

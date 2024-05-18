@@ -9,9 +9,10 @@ According to the definition of LCA on Wikipedia: “The lowest common ancestor i
 that has both p and q as descendants (where we allow a node to be a descendant of itself).”
 """
 def lowestCommonAncestor(self, root, p, q):
-    # if the nodes are in differents sides, so the root will be the lca
+    # remember if the childreen are in differents branches(left or right)
+    # then the LCA is the root
     curr = root
-
+    # binary search tree, lower values are in the left, greater values are in the right
     while curr:
         if p.val > curr.val and q.val > curr.val:
             curr = curr.right

@@ -35,38 +35,32 @@ All elements of candidates are distinct.
 1 <= target <= 40
 """
 from typing import List
+import copy
 
-def combinationSum(candidates: List[int], target: int) -> List[List[int]]:
+def combinationSum(candidates, target):
+    # distincts integers
+    # list of all combinations where the sum is equal to target
+    # return in any order
+    # I can use the same numer a lot of times
     res = []
-
-    # curr is a list combination that I want to add to my res
-    # [2, 2, 3] or [7] for candidates [2,3,6,7] and target = 7
-    def dfs(i, curr, total):
-        if total == target:
-            res.append(curr.copy())
-            return
-
+    def backtrack(i, curr, total):
         if i >= len(candidates) or total > target:
             return
         
-        # total = 2
-        # [2]
-        # i = 0
+        if total == target:
+            res.append(copy.copy(curr))
+            return
 
-        
-        # try with the same value in candidates
-        # [2, 2]
         curr.append(candidates[i])
-        dfs(i, curr, total + candidates[i])
+        backtrack(i, curr, total + candidates[i])
 
-        # try with the next number in candidates
-        # [2, 3]
-        curr.pop() # first pop the value we appended before
-        dfs(i+1, curr, total)
+        curr.pop()
+        backtrack(i + 1, curr, total)
 
-    dfs(0, [], 0)
-
+    backtrack(0, [], 0)
     return res
+
+
 
 if __name__ == "__main__":
     print(combinationSum([2,3,6,7], 7))

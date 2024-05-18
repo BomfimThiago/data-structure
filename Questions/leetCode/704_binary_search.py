@@ -35,5 +35,18 @@ def search(nums: List[int], target: int) -> int:
         
     return -1
 
+def search2(nums, target):
+    l = 0
+    r = len(nums) - 1
+    while l <= r:
+        m = (l + r) // 2
+        if target > nums[m]:
+            l = m + 1
+        elif target < nums[m]:
+            r = m - 1
+        else:
+            return m
+    return -1
+
 if __name__ == "__main__":
     print(search([5], 5))
