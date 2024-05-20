@@ -34,35 +34,49 @@ Output: 0
 Explanation: "06" cannot be mapped to "F" because of the leading zero ("6" is different from "06").
 
 """
-import string
+# top down
 def numDecodings(s):
-    dp = { len(s) : 1}
-
-    def dfs(i):
-        # base case
-        if i in dp:
-            return dp[i]
+    def dfs(nums, cache):
+        if not nums:
+            return 1
         
-        if s[i] == "0":
-            return 0
+        if nums in cache:
+            return cache[nums]
         
-        res = dfs(i + 1)
+        count = 0
 
-        if (i + 1 < len(s) and (s[i] == "1") or (s[i] == "2" and s[i+1] in "0123456")):
-            res += dfs(i + 2)
+        if nums[0] != "0":
+            count += dfs(nums[1:], cache)
 
-        dp[i] = res
+        if len(nums) >= 2 and 10 <= int(nums[:2]) <= 26:
+            count += dfs(nums[2:], cache)
 
-    return dfs(0)
+        cache[nums] = count
+
+        return cache[nums]
+    
+    return dfs(s, {})
+
+# bottom up
+def numDecodings2(s):
+    n = len(s)
+    dp = [0] * (n + 1)
+    dp[n] = 1  # A inicialização para o caso base
+
+    for i in range(n - 1, -1, -1):
+        if s[i] == '0':
+            continue
+
+        # Contagem simples do caso onde consideramos apenas o dígito atual
+        dp[i] += dp[i + 1]
+
+        # Contagem para os casos onde consideramos o dígito atual e o próximo, se formarem um código válido
+        if i < n - 1 and (s[i] == '1' or (s[i] == '2' and s[i + 1] <= '6')):
+            dp[i] += dp[i + 2]
+
+    return dp[0]
+
 
 if __name__ == "__main__":
-    print(numDecodings("11106"))
-
-    # 1 1106
-    # 1 110 6
-    # 1 11 06
-    # 1 11 0 6
-    # 1 1 10 6
-
-    # recursive 
-    
+    # print(numDecodings("11106"))
+    print(numDecodings2("12"))

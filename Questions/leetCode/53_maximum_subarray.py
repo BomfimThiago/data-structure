@@ -25,16 +25,19 @@ Explanation: The subarray [5,4,-1,7,8] has the largest sum 23.
 
 """
 def maxSubArray(nums):
-    # subarray contiguous non empty array
-    maxS = nums[0]
-    currS = 0
-    for n in nums:
-        if currS < 0:
-            currS = 0
-        currS += n
-        maxS = max(currS, maxS)
+    # mantem track of the min and the max in each iteration
+    res = nums[0]
+    curr_sum = nums[0]
 
-    return maxS
+    for n in nums[1:]:
+        curr_sum = max(
+            n,
+            curr_sum + n,
+        )
+
+        res = max(curr_sum, res)
+
+    return res
 
 if __name__ == "__main__":
     print(maxSubArray(nums = [-2,1,-3,4,-1,2,1,-5,4]))

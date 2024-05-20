@@ -20,22 +20,47 @@ Input: nums = [1,2,3]
 Output: 3
 
 """
-from typing import List
+# top down
+def rob(nums):
+    if len(nums) == 1:
+        return nums[0]
+    def dfs(i, cache, nums):
+        if i >= len(nums):
+            return 0
+        
+        if i in cache:
+            return cache[i]
+        
+        cache[i] = max(
+            nums[i] + dfs(i + 2, cache, nums),
+            dfs(i + 1, cache, nums)
+        )
+        
+        return cache[i]
 
-def helper(nums):
-    a, b = 0, 0
-    for n in nums:
-        tmp = max(a + n, b)
-        a = b
-        b = tmp
+    return max(dfs(0, {}, nums[:-1]), dfs(0, {}, nums[1:]))
 
-    return b
+# bottom up
+def rob2(nums):
+    if len(nums) == 1:
+        return nums[0]
+    def helper(nums):
+        current_max = 0
+        previous_max = 0
+        for i in range(len(nums) -1, -1, -1):
+            tmp = current_max
+            current_max = max(
+                nums[i],
+                nums[i] + previous_max,
+                current_max
+            )
+            previous_max = tmp
 
-def rob(nums: List[int]) -> int:
-    # see what is the max if I rob the houses from the second untilt the end
-    # or from the first withou the last one
-    return max(nums[0], helper(nums[1:]), helper(nums[:-1]))
+        return current_max
+
+    return max(helper(nums[:-1]), helper(nums[1:]))
        
 
 if __name__ == "__main__":
-    print(rob([1, 2, 3, 4]))
+    print(rob([1, 2, 3, 1]))
+    print(rob2([1, 2, 3, 1]))

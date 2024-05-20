@@ -19,15 +19,41 @@ Total amount you can rob = 2 + 9 + 1 = 12.
 """
 from typing import List
 
-def rob(nums: List[int]) -> int:
-    a = 0 
-    b = 0
-    for num in nums:
-        tmp = max(a + num, b)
-        a = b
-        b = tmp
+# top down
+def rob(nums):
+    def dfs(i, cache):
+        if i >= len(nums):
+            return 0
 
-    return b
+        if i in cache:
+            return cache[i]
+
+        cache[i] = max(
+            nums[i] + dfs(i + 2, cache),
+            dfs(i + 1, cache)
+        )
+
+        return cache[i]
+
+    return dfs(0, {})
+
+# bottom up
+def rob(nums: List[int]) -> int:
+    current_max = 0 
+    previous_max = 0
+
+    for i in range(len(nums) - 1, -1, -1):
+        tmp = current_max
+        current_max = max(
+            nums[i],
+            nums[i] + previous_max,
+            current_max
+        )
+        
+        previous_max = tmp
+
+    return current_max
+   
         
 if __name__ == "__main__":
     print(rob([2, 1, 1, 2]))
