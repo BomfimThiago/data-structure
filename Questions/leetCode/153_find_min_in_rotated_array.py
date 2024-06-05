@@ -28,32 +28,22 @@ Explanation: The original array was [11,13,15,17] and it was rotated 4 times.
 """
 from typing import List
 
-from typing import List
-
 def findMin(nums: List[int]) -> int:
-    m = len(nums) // 2
-    l = 0
-    r = len(nums) - 1
-    left = nums[l: m]
-    right = nums[m+1:r]
-    
-    def getMin(left, right):
-        if len(left) > 1:
-            m = len(left) // 2
-            l = left[0: m]
-            r = left[m:len(left)]
-            getMin(l, r)
+    res = nums[0]
+    l, r = 0, len(nums) - 1
 
-        if len(right) > 1:
-            m = len(right) // 2
-            l = right[0: m]
-            r = right[m:len(right)]
-            getMin(l, r)
+    while l <= r:
+        if nums[l] < nums[r]:
+           res = min(res, nums[l])
+           break
 
-        return left[0] if left[0] <= right[0] else right[0]
+        m = l + (r - l) // 2
+        res = min(res, nums[m])
+        if nums[m] >= nums[l]:
+            l = m + 1
+        else:
+            r = m - 1
 
-    res = getMin(left, right)
-    
     return res
 
 

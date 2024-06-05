@@ -20,7 +20,6 @@ Output: 4
 def searchInsert(nums, target):
     l = 0
     r = len(nums) - 1
-    m = (l + r) // 2
     while l <= r:
         m = (l + r) // 2
         if target > nums[m]:
@@ -35,4 +34,4 @@ def searchInsert(nums, target):
         return m + 1
 
 if __name__ == "__main__":
-    print(searchInsert(nums = [1,3,5,6], target = 0))
+    print(searchInsert(nums = [1,3,5,6], target = 7))

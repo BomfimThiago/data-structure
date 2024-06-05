@@ -50,9 +50,16 @@ nums is sorted in non-decreasing order.
 from typing import List
 
 def removeDuplicates(nums: List[int]):
-    l = 1
-    for r in range(1, len(nums)):
-        if nums[r] != nums[r-1]:
-            nums[l] = nums[r]
-            l += 1
-    return l
+    # arrays are sorte 0 0 1 1 2 3 3 3 3 , [0, 1, 2, 3, 0, 1, 3, 3,3]
+
+    unique_count = 1
+    for i in range(1, len(nums)):
+        if nums[i] != nums[i - 1]:
+            nums[unique_count] = nums[i]
+            unique_count += 1
+    return unique_count
+
+if __name__ == "__main__":
+    nums = [1,1,2]
+    nums2 = [0,0,1,1,1,2,2,3,3,4]
+    print(removeDuplicates(nums2))

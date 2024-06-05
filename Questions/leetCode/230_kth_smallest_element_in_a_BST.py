@@ -18,15 +18,41 @@ The number of nodes in the tree is n.
 
 Follow up: If the BST is modified often (i.e., we can do insert and delete operations) and you need to find the kth smallest frequently, how would you optimize?
 """
+from heapq import heappop, heappush
 def kthSmallest(root, k):
     # if we implement an in_order transversal order we are going to have the list crescent
     # then return k index of that list
-    stack = [] 
-    def in_order_transversal(root, stack):
+    heap = []
+    def inorder(root):
         if root:
-            in_order_transversal(root.left, stack)
-            stack.append(root.val)
-            in_order_transversal(root.right, stack)
-            
-    in_order_transversal(root, stack)
-    return stack[k-1] # since the index start em 0
+            inorder(root.left)
+            heappush(heap, root.val)
+            inorder(root.right)
+
+    inorder(root)
+    minKVal = 0
+    for _ in range(k):
+        minKVal = heappop(heap)
+
+    return minKVal
+
+
+def kthSmallest2(root, k):
+    n = 0
+    stack = []
+    curr = root
+
+    while curr and stack:
+        while curr:
+            stack.append(curr)
+            curr = curr.left
+
+        curr = stack.pop()
+        n += 1
+        if n == k:
+            return curr.val
+        
+        curr = curr.right
+
+# in a heap I'm sure that I have the min values
+# a inorder transversal funcionaria tbm pq ele coloca o esquerdo primeiro e o esquerdo numa bst eh sempre os menores elementos

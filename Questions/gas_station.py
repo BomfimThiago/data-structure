@@ -23,34 +23,18 @@ Output: 4
 """
 
 # chatgpt solution
-def GasStation(strArr):
-    # Convertendo a string de entrada em uma lista de dicionários
-    gas_stations = []
-    for station in strArr[1:]:
-        gas, cost = map(int, station.split(':'))
-        gas_stations.append({'gas': gas, 'cost': cost})
-
-    # Loop através de cada posto de gasolina como ponto de partida potencial
-    for start in range(len(gas_stations)):
-        fuel = 0
-        possible = True
-        
-        # Viajar ao redor da rota circular
-        for i in range(start, start + len(gas_stations)):
-            station = gas_stations[i % len(gas_stations)]
-            fuel += station['gas'] - station['cost']
-            
-            # Se o combustível ficar negativo em algum ponto, a rota é impossível
-            if fuel < 0:
-                possible = False
-                break
-        
-        # Se a rota for possível a partir do ponto de partida atual, retorne o índice
-        if possible:
-            return start + 1  # Adicionando 1 para converter para índice baseado em 1
+def GasStation(gasList, costList):
+    if sum(gasList) < sum(costList):
+      return -1
     
-    # Se nenhum ponto de partida permitir viajar ao redor da rota, retorne "impossível"
-    return "impossível"
+    total = 0
+    res = 0
+    for i in range(len(gasList)):
+        total += gasList[i] - costList[i]
+        if total < 0:
+           total = 0
+           res = i + 1
 
+    return res
 # Mantenha esta chamada de função para o código do usuário
 print(GasStation(input()))

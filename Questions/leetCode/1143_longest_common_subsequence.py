@@ -25,5 +25,26 @@ Output: 0
 Explanation: There is no such common subsequence, so the result is 0.
 
 """
+# top - bottom solution
 def longestCommonSubsequence(text1, text2):
-    pass
+    def dfs(i, j, cache):
+        if i == len(text1) or j == len(text2):
+            return 0
+        
+        if (i, j) in cache:
+            return cache[(i, j)]
+        
+        count = 0
+        if text1[i] == text2[j]:
+            count += 1 + dfs(i + 1, j + 1, cache)
+        else:
+            count += max(dfs(i, j + 1, cache), dfs(i + 1, j, cache))
+    
+        cache[(i, j)] = count
+
+        return cache[(i, j)]
+
+    return dfs(0, 0, {})
+
+if __name__ == "__main__":
+    print(longestCommonSubsequence(text1 = "ezupkr", text2 = "ubmrapg"))

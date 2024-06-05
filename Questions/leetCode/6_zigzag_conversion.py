@@ -43,6 +43,7 @@ def convert(s: str, numRows: int) -> str:
             direction *= -1
         i += direction
 
+    print("res", res)
     return "".join(res)
 
 

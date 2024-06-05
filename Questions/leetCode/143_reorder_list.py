@@ -21,6 +21,7 @@ def reorderList(head):
     # [1,2,3,4] slow we have 1, 2
     # fast we have 3, 4
 
+    # reverse second half [4, 3]
     second = slow.next
     prev = slow.next = None
     while second:

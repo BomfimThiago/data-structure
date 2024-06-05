@@ -17,7 +17,7 @@ Explanation: There is no common prefix among the input strings.
 from typing import List
 
 
-def longestCommonPrefix(self, strs: List[str]) -> str:
+def longestCommonPrefix(strs: List[str]) -> str:
     smallest_word = min(strs, key=len)
 
     res = smallest_word
@@ -32,6 +32,6 @@ def longestCommonPrefix(self, strs: List[str]) -> str:
     return res
 
 
-
+print(longestCommonPrefix(["flower","flow","flight"]))
             
 
